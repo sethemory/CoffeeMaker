@@ -1,0 +1,45 @@
+<diagram program="umletino" version="15.0.0"><zoom_level>8</zoom_level><element><id>UMLGeneric</id><coordinates><x>152</x><y>0</y><w>80</w><h>24</h></coordinates><panel_attributes>_Front End_
+bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>312</x><y>0</y><w>112</w><h>24</h></coordinates><panel_attributes>_APIIngredientController_
+bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>480</x><y>0</y><w>80</w><h>24</h></coordinates><panel_attributes>_Ingredient_
+bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>712</x><y>0</y><w>80</w><h>24</h></coordinates><panel_attributes>_IngredientRepository_
+bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>192</x><y>16</y><w>24</w><h>520</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;630</additional_attributes></element><element><id>Relation</id><coordinates><x>744</x><y>16</y><w>24</w><h>168</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;190</additional_attributes></element><element><id>Relation</id><coordinates><x>520</x><y>16</y><w>24</w><h>88</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>192</x><y>40</y><w>184</w><h>32</h></coordinates><panel_attributes>lt=-&gt;&gt;&gt;
+createIngredient(ingredient)</panel_attributes><additional_attributes>10;20;210;20</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>360</x><y>56</y><w>16</w><h>464</h></coordinates><panel_attributes>
+bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>360</x><y>16</y><w>24</w><h>56</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>368</x><y>72</y><w>168</w><h>32</h></coordinates><panel_attributes>lt=-&gt;&gt;&gt;
+Ingredient.getName()</panel_attributes><additional_attributes>10;20;190;20</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>520</x><y>88</y><w>16</w><h>32</h></coordinates><panel_attributes>
+bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>368</x><y>104</y><w>168</w><h>32</h></coordinates><panel_attributes>lt=&lt;..
+name</panel_attributes><additional_attributes>10;20;190;20</additional_attributes></element><element><id>Relation</id><coordinates><x>368</x><y>136</y><w>272</w><h>32</h></coordinates><panel_attributes>lt=-&gt;&gt;&gt;
+ingredientService.findByName(name)</panel_attributes><additional_attributes>10;20;320;20</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>624</x><y>152</y><w>16</w><h>64</h></coordinates><panel_attributes>
+bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>520</x><y>112</y><w>24</w><h>384</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;460</additional_attributes></element><element><id>Relation</id><coordinates><x>616</x><y>152</y><w>160</w><h>32</h></coordinates><panel_attributes>lt=-&gt;&gt;&gt;
+IngredientRepository.findOne()</panel_attributes><additional_attributes>30;20;160;20</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>744</x><y>168</y><w>16</w><h>32</h></coordinates><panel_attributes>
+bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>632</x><y>184</y><w>128</w><h>32</h></coordinates><panel_attributes>lt=&lt;..
+DomainObject</panel_attributes><additional_attributes>10;20;140;20</additional_attributes></element><element><id>Relation</id><coordinates><x>368</x><y>200</y><w>272</w><h>32</h></coordinates><panel_attributes>lt=&lt;..
+Ingredient</panel_attributes><additional_attributes>10;20;320;20</additional_attributes></element><element><id>UMLFrame</id><coordinates><x>168</x><y>240</y><w>608</w><h>272</h></coordinates><panel_attributes>alt
+--
+[ingredientService.findByName() != null]
+
+
+
+-..
+[else]
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>192</x><y>280</y><w>184</w><h>32</h></coordinates><panel_attributes>lt=&lt;..
+ResponseEntity</panel_attributes><additional_attributes>10;20;210;20</additional_attributes></element><element><id>UMLFrame</id><coordinates><x>184</x><y>320</y><w>584</w><h>160</h></coordinates><panel_attributes>alt
+--
+[Ingredient.getUnit &lt; 0]
+
+
+
+
+-..
+[else]
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>368</x><y>408</y><w>272</w><h>32</h></coordinates><panel_attributes>lt=-&gt;&gt;&gt;
+save()</panel_attributes><additional_attributes>10;20;320;20</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>744</x><y>416</y><w>16</w><h>32</h></coordinates><panel_attributes>
+bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>744</x><y>192</y><w>24</w><h>240</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;280</additional_attributes></element><element><id>Relation</id><coordinates><x>200</x><y>368</y><w>184</w><h>32</h></coordinates><panel_attributes>lt=&lt;..
+ResponseEntity</panel_attributes><additional_attributes>10;20;210;20</additional_attributes></element><element><id>Relation</id><coordinates><x>368</x><y>448</y><w>272</w><h>32</h></coordinates><panel_attributes>lt=&lt;..
+void</panel_attributes><additional_attributes>10;20;320;20</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>592</x><y>0</y><w>80</w><h>24</h></coordinates><panel_attributes>_IngredientService_
+bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>624</x><y>16</y><w>24</w><h>152</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;170</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>624</x><y>400</y><w>16</w><h>64</h></coordinates><panel_attributes>
+bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>624</x><y>208</y><w>24</w><h>208</h></coordinates><panel_attributes>lt=.</panel_attributes><additional_attributes>10;10;10;240</additional_attributes></element><element><id>Relation</id><coordinates><x>632</x><y>408</y><w>128</w><h>32</h></coordinates><panel_attributes>lt=-&gt;&gt;&gt;
+save()</panel_attributes><additional_attributes>10;20;140;20</additional_attributes></element><element><id>Relation</id><coordinates><x>632</x><y>432</y><w>128</w><h>32</h></coordinates><panel_attributes>lt=&lt;..
+void</panel_attributes><additional_attributes>10;20;140;20</additional_attributes></element><element><id>Relation</id><coordinates><x>192</x><y>496</y><w>184</w><h>32</h></coordinates><panel_attributes>lt=&lt;..
+ResponseEntity</panel_attributes><additional_attributes>10;20;210;20</additional_attributes></element></diagram>

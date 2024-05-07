@@ -1,0 +1,178 @@
+<diagram program="umletino" version="15.0.0"><zoom_level>13</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLPackage</id><coordinates><x>1651</x><y>0</y><w>377</w><h>221</h></coordinates><panel_attributes>edu.ncsu.csc.CoffeeMaker
+--
+bg=orange</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1716</x><y>65</y><w>247</w><h>104</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+Application
+--
+--
+_+main(args:String[]) : void_
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLPackage</id><coordinates><x>0</x><y>0</y><w>1612</w><h>559</h></coordinates><panel_attributes>edu.ncsu.csc.CoffeeMaker.controllers
+--
+bg=cyan</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>455</x><y>351</y><w>351</w><h>156</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+APIRecipeController
+--
+-recipeService : RecipeService
+--
++getRecipes() : List&lt;Recipe&gt;
++getRecipe(name:String) : ResponseEntity
++createRecipe(recipe:Recipe) : ResponseEntity
++deleteRecipe(name:String) : ResponseEntity</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>507</x><y>52</y><w>442</w><h>221</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+/APIController/
+--
+_#BASE_PATH : String_
+_-GSON : Gson_
+--
+_#toJson(obj:Object) : String_
+_#toJson(obj:Object, cls:Class&lt;JSONResponse&gt;) : String_
+_#responseMessage(status:String, message:String) : String_
+_#errorResponse(message:String) : String_
+_#successResponse(message:String) : String_</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>78</x><y>65</y><w>312</w><h>195</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+MappingController
+--
+--
++index(model:Model) : String
++recipeForm(model:Model) : String
++deleteRecipeForm(model:Model) : String
++editRecipeForm(model:Model) : String
++inventoryForm(model:Model) : String
++makeCoffeeForm(model:Model) : String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>819</x><y>351</y><w>403</w><h>117</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+APIInventoryController
+--
+-inventoryService : InventoryService
+--
++getInventory() : ResponseEntity
++updateInventory(inventory:Inventory) : ResponseEntity
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>26</x><y>351</y><w>429</w><h>169</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+APICoffeeController
+--
+-inventoryService : InventoryService
+-recipeService : RecipeService
+ingredientService: IngredientService
+--
++makeCoffee(name:String, amtPaid:int) : ResponseEntity
+_+makeCoffee(toPurchase:Recipe, amtPaid:int) : int_</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1235</x><y>351</y><w>364</w><h>130</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+JSONResponse
+--
+#status : String
+#message : String
+--
++JSONResponse(status:String, message:String)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>936</x><y>234</y><w>429</w><h>143</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..1</panel_attributes><additional_attributes>10;10;290;10;290;90</additional_attributes></element><element><id>Relation</id><coordinates><x>364</x><y>260</y><w>234</w><h>117</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>160;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>689</x><y>260</y><w>39</w><h>117</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>897</x><y>260</y><w>39</w><h>117</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>26</x><y>637</y><w>1053</w><h>650</h></coordinates><panel_attributes>edu.ncsu.csc.CoffeeMaker.models
+--
+bg=green</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1339</x><y>754</y><w>572</w><h>234</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+/Service/
+--
+--
+/#getRepository() : JpaRepository&lt;DomainObject, ? extends Object&gt;/
++save(obj: DomainObject) : void
++findAll() : List&lt;? extends DomainObject&gt;
++saveAll(objects: List&lt;? extends DomainObject&gt;): void
++delete(obj: DomainObject): void
++deleteAll(): void
++count(): long
+#findBy(example: Example&lt;DomainObject&gt;): List&lt;? extends DomainObject&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>26</x><y>819</y><w>390</w><h>468</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+Recipe
+--
+-id : Long
+-name : String
+-price : Integer
+-coffee : Integer
+-milk : Integer
+-sugar : Integer
+-chocolate : Integer
+--customIngredients: ingredients[]
+--
++Recipe()
++checkRecipe() : boolean
+-setId(id:Long) : void
++setChocolate(chocolate:int) : void
++setCoffee(coffee:int) : void
++setMilk(milk:int) : void
++setSugar(sugar:int) : void
++setPrice(price:int) : void
++updateRecipe(r:Recipe) : void
++toString() : String
++hashCode() : int
++equals(obj:Object) : boolean
++addIngredient(i:Ingredient): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>442</x><y>884</y><w>637</w><h>390</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+Inventory
+--
+-id : Long
+-coffee : int
+-milk : int
+-sugar : int
+-chocolate : int
+-customIngredients: ingredients[]
+--
++Inventory()
++Inventory(coffee:int, milk:int, sugar:int, chocolate:int, ingredients: ingredients[])
++checkChocolate(chocolate:String) : int
++checkCoffee(coffee:String) : int
++checkMilk(milk:String) : int
++checkSugar(sugar:String) : int
++enoughIngredients(r:Recipe) : boolean
++useIngredients(r:Recipe) : boolean
++addIngredients(coffee:int, milk:int, sugar:int, chocolate:int, ingredients: ingredients[]) : boolean
++toString() : String
++checkCustomIngredient(ingredients[]): int
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>481</x><y>780</y><w>195</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;130;80</additional_attributes></element><element><id>Relation</id><coordinates><x>286</x><y>741</y><w>104</w><h>104</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>60;10;10;60</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>1118</x><y>689</y><w>1131</w><h>572</h></coordinates><panel_attributes>edu.ncsu.csc.CoffeeMaker.services
+--
+bg=black</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>364</x><y>676</y><w>156</w><h>117</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+/DomainObject/
+--
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1131</x><y>1079</y><w>351</w><h>130</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+InventoryService
+--
+-inventoryRepository: InventoryRepository
+--
+#getRepository(): JpaRepository
++getInventory(): Inventory</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1508</x><y>1079</y><w>364</w><h>130</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+RecipeService
+--
+-recipeRepository: RecipeRepository
+--
+#getRepository(): JpaRepository
++findByName(name: String): Recipe</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1300</x><y>975</y><w>221</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>150;10;10;80</additional_attributes></element><element><id>Relation</id><coordinates><x>1677</x><y>975</y><w>39</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element><element><id>UMLPackage</id><coordinates><x>1742</x><y>338</y><w>533</w><h>273</h></coordinates><panel_attributes>edu.ncsu.csc.CoffeeMaker.repositories
+--
+bg=red</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1781</x><y>377</y><w>455</w><h>65</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+InventoryRepository extends JpaRepository&lt;Inventory, Long&gt;
+--
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1781</x><y>455</y><w>455</w><h>65</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+RecipeRepository extends JpaRepository&lt;Recipe, Long&gt;
+--
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>702</x><y>676</y><w>273</w><h>182</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+Ingredient
+--
+-name: String
+-units: int
+--
++Ingredient()
++Ingredient(name:String, unit:int)
++getName() : String
++getUnit() : int
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>507</x><y>715</y><w>221</w><h>52</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;20;150;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1898</x><y>1079</y><w>338</w><h>130</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+IngredientService
+--
+-ingredientRepository: IngredientRepository
+--
+#getRepository(): JpaRepository
++findByName(name:String):Ingredient</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1768</x><y>975</y><w>299</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;210;80</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1768</x><y>533</y><w>481</w><h>65</h></coordinates><panel_attributes>&lt;&lt;Interface&gt;&gt;
+IngredientRepository extends JpaRepository&lt;Ingredient, Long&gt;
+--
+--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1131</x><y>78</y><w>455</w><h>143</h></coordinates><panel_attributes>&lt;&lt;Java Class&gt;&gt;
+APIIngredientController
+--
+-ingredientService: IngredientService
+--
++getIngredient(name:String): ResponseEntity
++updateIngredient(ingredient:Ingredient): ResponseEntity
++createIngredient(ingredient:Ingredient)
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>936</x><y>143</y><w>221</w><h>39</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;150;10</additional_attributes></element></diagram>

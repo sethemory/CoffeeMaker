@@ -1,0 +1,305 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Edit Recipe</title>
+<style>
+.username.ng-valid {
+	background-color: lightgreen;
+}
+
+.username.ng-dirty.ng-invalid-required {
+	background-color: red;
+}
+
+.username.ng-dirty.ng-invalid-min {
+	background-color: yellow;
+}
+
+.email.ng-valid {
+	background-color: lightgreen;
+}
+
+.email.ng-dirty.ng-invalid-required {
+	background-color: red;
+}
+</style>
+<link rel="stylesheet" href="css/bootstrap.css" />
+<link rel="stylesheet" href="css/app.css" />
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+</head>
+
+<body>
+
+	<script>
+		/*<![CDATA[*/
+		var app = angular.module('myApp', []);
+		app.controller('editCtrl', function($scope, $http, $q) {
+			$scope.inventory = {
+				ingredients : []
+			};
+			
+			// This function will get the inventory from the database and fill an array with
+			// data that was received.
+			$scope.getInventory = function() {
+				$http.get("/api/v1/inventory").then(function(response) {
+					$scope.inventory.ingredients = response.data.ingredients;
+				}, function(rejection) {
+					console.error("Error while getting Inventory");
+				})
+			}
+			
+			function updateRecipes() {
+				$http.get("/api/v1/recipes").then(function (response) {
+	  				$scope.recipes = response.data;
+	  			});
+			}
+			
+			$scope.loadRecipe = function(){
+				let name = document.getElementById("currRecipe").value;
+				$http.get("/api/v1/recipes/" + name).then(function (res){
+					console.log(res.data);
+					$scope.recipe = res.data;
+				});
+			}
+
+			// Calling the get inventory function so we can populate our array
+			$scope.getInventory();
+			
+			//$scope.getRecipes();
+			updateRecipes();
+			
+			// This function is responsible for setting our form back to default
+			// when it is caled
+			$scope.reset = function() {
+				$scope.recipe = {
+					name : '',
+					price : '',
+					ingredients : []
+				};
+				
+				$scope.name = "";
+				
+				$scope.recipeList = {
+					recipes : []
+				};
+				
+				$scope.inventory.ingredients = [];
+				$scope.getInventory();
+				//$scope.getRecipes();
+				
+				if (undefined != $scope.addRecipeForm) {
+					$scope.addRecipeForm.$setPristine(); // reset Form
+					document.getElementById("ingredientAmount").value = "";
+				}
+			}
+			
+			// This function handled what happends when the submit button is pressed
+			$scope.submit = function() {
+				// This is a flag for if adding the ingredient
+				$scope.ingFail = false;
+				
+				$scope.addRecipe();
+				// This checks for if the addRecipe function that was just called was successful
+				if ($scope.success){
+					$scope.inventory.ingredients = [];
+					$scope.getInventory();
+				}
+			}
+			
+			// This function adds the recipe the user made with the form to the system
+			$scope.addRecipe = function() {
+				// These are flags for the status of this function
+				$scope.success = false;
+				$scope.failure = false;
+				
+				// This allows only recipes with at least one ingredient to be submitted
+				if ($scope.recipe.ingredients.length > 0) {
+					console.log($scope.recipe);
+					$http.put("/api/v1/recipes", $scope.recipe).then(function(response) {
+								$scope.success = true;
+								$scope.reset();
+								//$scope.getRecipes();
+							}, function(rejection) {
+								$scope.failure = true;
+								console.error("Error while adding recipe");
+							});
+				} else {
+					$scope.failure = true;
+				}
+			}
+
+			// This function adds the ingredient to the recipe ingredients array
+			$scope.addIngredient = function() {
+				$scope.ingredient = {
+					name : "",
+					amount : ""
+				}
+				// This if does not allow an ingredient to be added if there is none in the ingredient list
+				if ($scope.inventory.ingredients.length > 0) {
+					$scope.ingredient.name = document
+					.getElementById("newIngredients").value;
+					$scope.ingredient.amount = document
+							.getElementById("ingredientAmount").value;
+					// This if makes sure the amount for the ingredient is not empty and not negative
+					if ($scope.ingredient.amount != "" && $scope.ingredient.amount > 0) {
+						$scope.recipe.ingredients.push($scope.ingredient);
+						$scope.inventory.ingredients.splice($scope.inventory.ingredients.findIndex(object => {
+					  		return object.name === $scope.ingredient.name;
+						}), 1);
+						document.getElementById("ingredientAmount").value = "";
+					} else {
+						$scope.ingFail = true;
+					}
+				} else {
+					$scope.ingFail = true;
+				}
+			}
+			
+			// This function takes the ingredient that was added to the recipe, removes it from the recipe, and
+			// adds it back to our inventory array so we can display it in the combo box again
+			$scope.removeIngredient = function(name) {
+				let flag = false;
+				for (let i = 0; i < $scope.inventory.ingredients.length; i++){
+					if ($scope.inventory.ingredients[i].name == name){
+						flag = true;
+					}
+				}
+				$scope.ingredient = {
+						name : "",
+						amount : ""
+				}
+				$scope.ingredient.name = name;
+				$scope.recipe.ingredients.splice($scope.recipe.ingredients.findIndex(object => {
+					  return object.name === $scope.ingredient.name;
+				}), 1);
+				if (!flag){
+					$scope.inventory.ingredients.push($scope.ingredient);
+				}
+			}
+
+			$scope.reset();
+
+		});
+		/*]]>*/
+	</script>
+
+
+	<div class="generic-container ng-cloak" ng-app="myApp"
+		ng-controller="editCtrl as ctrl">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<span class="lead">Choose Recipe</span>
+			</div>
+
+			<select name="currRecipe" id="currRecipe">
+			
+				<option ng-repeat="recipe in recipes" value="{{recipe.name}}">{{recipe.name}}</option>
+			</select>
+			
+			<button ng-click="loadRecipe()" type="button">Load The Selected Recipe</button>
+
+			<div class="panel-heading">
+				<span class="lead">Update Recipe Form </span>
+			</div>
+			
+			
+			<div class="formcontainer">
+				<form ng-submit="submit()" name="editRecipeForm"
+					class="form-horizontal">
+					
+					<div class="row">
+					<div class="form-group col-md-12">
+							<label class="col-md-2 control-lable" for="file">Name</label>
+							<div class="col-md-7">
+								<input type="text" ng-model="recipe.name" name="name"
+									class="name form-control input-sm"
+									placeholder="Enter recipe name" required="0" 
+									value="{{recipe.name}}" readonly/>
+								<div class="has-error" ng-show="addRecipeForm.$dirty">
+									<span ng-show="addRecipeForm.name.$error.required">This
+										is a required field</span> <span
+										ng-show="addRecipeForm.name.$invalid">This field is
+										invalid </span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group col-md-12">
+							<label class="col-md-2 control-lable" for="file">Price</label>
+							<div class="col-md-7">
+								<input type="text" ng-model="recipe.price" name="price"
+									class="price form-control input-sm"
+									placeholder="Enter recipe price" required="0" 
+									value="{{recipe.price}}"/>
+								<div class="has-error" ng-show="addRecipeForm.$dirty">
+									<span ng-show="addRecipeForm.price.$error.required">This
+										is a required field</span> <span
+										ng-show="addRecipeForm.price.$error.min">Minimum amount
+										is 0</span> <span ng-show="addRecipeForm.price.$invalid">This
+										field is invalid </span>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					
+					<div class="row">
+						<div class="form-group col-md-12">
+							<h4>Ingredients</h4>
+							<div ng-repeat="ingredient in recipe.ingredients">
+								<p>{{ingredient.name}} : {{ingredient.amount}} <button ng-click="removeIngredient(ingredient.name)" type="button">
+								<img src="images/minus.png" width="20" height="20">
+							</button></p>
+								
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group col-md-12">
+							<div class="col-md-2 control-lable">
+								<select name="newIngredients" id="newIngredients">
+									<option ng-repeat="ingredient in inventory.ingredients"
+										value="{{ingredient.name}}">{{ingredient.name}}</option>
+								</select>
+							</div>
+							<div class="col-md-7">
+								<input type="number" name="" id="ingredientAmount"
+									class="price form-control input-sm"
+									placeholder="Enter an amount for the ingredient" />
+							</div>
+							<button ng-click="addIngredient()" type="button">
+								<img src="images/plus.png" width="20" height="20">
+							</button>
+						</div>
+					</div>
+					
+
+					<div class="row">
+						<div class="form-actions floatRight">
+							<input type="submit" value="Submit"
+								class="btn btn-primary btn-sm"
+								ng-disabled="editRecipeForm.$invalid" />
+							<button type="button" ng-click="reset()"
+								class="btn btn-warning btn-sm"
+								ng-disabled="editRecipeForm.$pristine">Reset Form</button>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div ng-show="success">Inventory Successfully Updated</div>
+			<div ng-show="failure">Error while updating inventory.</div>
+			<div ng-show="nothing">Enter a value before submitting.</div>
+		</div>
+
+		<a href="/index">Home</a>
+	</div>
+
+
+
+</body>
+</html>
